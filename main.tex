@@ -693,9 +693,17 @@ The LQR optimization in MATLAB is provided in Appendix \ref{app:lqr}, and the si
 
 There is a considerable differences between the state responses for different output matrices, because when we use the second choice for the state to output matrix, a higher weight is put on the state variable $x_1$ compared to the state variable $x_3$. Therefore the LQR results exhibit a faster convergence rate.
 
-\section{Dynamical control}
-Consider dynamical control of the inverted pendulum balance system.
+\section{``Robust'' control}
+In real life applications, one must also consider arbitrary perturbations to system parameters in real time. For example, the mass of the pendulum could increase under the addition of external weight. The mass of the cart can decrease if it is fuel propelled. If we simply consider parameter variations while keeping the LQR state feedback gain matrix fixed, we lose stability after the perturbation exceeds a certain threshold. We can demonstrate this by adding extra mass to the pendulum in real time. The results are provided in Figures \ref{fig:lqr_perturb_5kg} and \ref{fig:lqr_perturb_1kg}.
 
+I have tested whether the LQR control law we have is robust in this sense by increasing m2 by 5kg, at $t = 20$s. I simply changed the mass parameter after the first-time evolution loop and ran another loop without changing the optimal state feedback gain. We could simply rerun the LQR algorithm to find the optimal K, but I don't think this would be feasible in real life. Is there a clever way to achieve robustness against parameter variations in real time when the instance at which the perturbation is performed is unknown?
+
+On another note, it's also interesting to understand what is the range of parameter perturbations that LQR can tolerate. For example, if the mass is perturbed by 1kg, the system still achieves the desired steady state response.
+
+To achieve robust LQR, we consider nonlinear terms in the cost function
+\begin{equation}
+    J = \frac{1}{2} \int_{0}^{\infty}dt \left[x^T Q x + u^T R u + \text{nonlinear terms} \dots \right]
+\end{equation}
 \newpage
 \appendix
 
@@ -1879,6 +1887,20 @@ ans =
     \includegraphics[width=0.6\textwidth]{lqr/lqr_4.png}
     \caption{LQR optimal input for $y = [100 x_1, 10 x_3]^T$.}
     \label{fig:lqr4}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.6\textwidth]{lqr_offset_m2_5kg.png}
+    \caption{LQR results for pendulum mass perturbation by $\delta m_2 = 5$kg at $t = 20$s.}
+    \label{fig:lqr_perturb_5kg}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.6\textwidth]{lqr_offset_m2_1kg.png}
+    \caption{LQR results for pendulum mass perturbation by $\delta m_2 = 1$kg at $t = 20$s.}
+    \label{fig:lqr_perturb_1kg}
 \end{figure}
 
 
