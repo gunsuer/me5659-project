@@ -1,0 +1,72 @@
+
+% This LaTeX was auto-generated from MATLAB code.
+% To make changes, update the MATLAB code and republish this document.
+
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{color}
+
+\sloppy
+\definecolor{lightgray}{gray}{0.5}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+    
+    \begin{verbatim}
+clear;clc
+
+A = [0 0;2 0];
+B = [2;0];
+C = [0 1];
+
+K = [0.707 0.250];
+L = [100;50];
+
+kg = 1;
+
+% t = 0:0.01:10;
+% r = sin(t);
+
+x0 = [5 -4 0 0];
+
+tspan = [0 10];
+[t,x] = ode45(@ODEsystem,tspan,x0);
+
+figure, hold on
+plot(t,x(:,1),'b','DisplayName','x_1(t)');
+plot(t,x(:,3),'r','DisplayName','guess x_1(t)');
+legend('show')
+xlabel('Time (s)')
+ylabel('State variable')
+
+ha = gca;
+box on
+grid on
+set(ha,'GridLineStyle','--')
+print(gcf,'fig1.png','-dpng','-r500');
+
+figure, hold on
+plot(t,x(:,2),'b','DisplayName','x_2(t)')
+plot(t,x(:,4),'r','DisplayName','guess x_2(t)')
+legend('show')
+xlabel('Time (s)')
+ylabel('State variable')
+
+ha = gca;
+box on
+grid on
+set(ha,'GridLineStyle','--')
+print(gcf,'fig2.png','-dpng','-r500');
+
+hold off
+\end{verbatim}
+
+\includegraphics [width=4in]{hw8_01.eps}
+
+\includegraphics [width=4in]{hw8_02.eps}
+
+
+
+\end{document}
+

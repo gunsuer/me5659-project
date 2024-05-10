@@ -1,0 +1,52 @@
+
+% This LaTeX was auto-generated from MATLAB code.
+% To make changes, update the MATLAB code and republish this document.
+
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{color}
+
+\sloppy
+\definecolor{lightgray}{gray}{0.5}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+    
+    \begin{verbatim}
+clear;clc
+
+syms g L m1 m2;
+
+% ss model
+A = [0 1 0 0;g/L*(m1+m2)/m1 0 0 0;0 0 0 1;g*m2/m1 0 0 0];
+B = [0;1/(L*m1);0;1/m1];
+C = [1 0 0 0];
+D = 0;
+
+% controllability matrix
+cc = [B A*B A^2*B A^3*B]
+
+% determinant
+det(cc)
+\end{verbatim}
+
+        \color{lightgray} \begin{verbatim} 
+cc =
+ 
+[       0, 1/(L*m1),                        0, (g*(m1 + m2))/(L^2*m1^2)]
+[1/(L*m1),        0, (g*(m1 + m2))/(L^2*m1^2),                        0]
+[       0,     1/m1,                        0,          (g*m2)/(L*m1^2)]
+[    1/m1,        0,          (g*m2)/(L*m1^2),                        0]
+ 
+ 
+ans =
+ 
+g^2/(L^4*m1^4)
+ 
+\end{verbatim} \color{black}
+    
+
+
+\end{document}
+

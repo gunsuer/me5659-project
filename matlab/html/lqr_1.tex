@@ -1,0 +1,159 @@
+
+% This LaTeX was auto-generated from MATLAB code.
+% To make changes, update the MATLAB code and republish this document.
+
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{color}
+
+\sloppy
+\definecolor{lightgray}{gray}{0.5}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+    
+    
+\subsection*{Contents}
+
+\begin{itemize}
+\setlength{\itemsep}{-1ex}
+   \item define systems
+   \item initialization
+   \item linear quadratic optimal control 1
+   \item linear quadratic optimal control 2
+\end{itemize}
+\begin{verbatim}
+clear all; clc
+
+\begin{verbatim}
+m1 = 2;
+m2 = 1;
+g = 10;
+L = 0.75;
+
+A = [0 1 0 0;g*(m1+m2)/(m1*L) 0 0 0;0 0 0 1;g*m2/m1 0 0 0];
+B = [0;1/(L*m1);0;1/m1];
+C = [1 0 0 0; 0 0 1 0];
+eig(A)
+cm = ctrb(A,B);
+rank(cm)
+om = obsv(A,C);
+rank(om)
+
+ans =
+
+         0
+         0
+    4.4721
+   -4.4721
+
+
+ans =
+
+     4
+
+
+ans =
+
+     4
+
+x(:,1) = [0.1; 0; 0; 0];
+y(:,1) = C*x(:,1);
+t = 0:0.01:20; %0.01 time span of interest
+nt = length(t); % number of time steps
+dt = t(2) - t(1);
+% reference input
+for i = 1:nt
+    r(:,i) = 1;
+    u(:,i) = 1;
+end
+
+Q = C'*C; R = eye (1);
+K = lqr(A,B,Q,R)
+A3 = A - B*K;
+eig(A3)
+kg = 0; %-inv(C*inv(A3)*B);
+u(:,1) = -K*x(:,1) + kg*r(:,1);
+for i = 1:nt-1
+x_dot(:,i) = A*x(:,i) + B*u(:,i);
+x(:,i+1) = x(:,i) + x_dot(:,i)*dt;
+y(:,i+1) = C*x(:,i+1);
+u(:,i+1) = -K*x(:,i+1) + kg*r(:,i+1);
+end
+
+figure
+plot(t,x(1,:),'b',t,x(2,:),'r',t,x(3,:),'g',t,x(4,:),'m','linewidth',2)
+set(gca,'fontsize',18)
+title('LQR control for $y = [x_1, x_3]^T$','Interpreter', 'latex')
+legend({'$x_1$','$x_2$','$x_3$','$x_4$'},'Interpreter', 'latex')
+legend boxoff
+xlabel('Time (s)')
+
+figure
+plot(t,u,'k--','LineWidth',2)
+set(gca,'fontsize',18)
+title('LQR optimal input')
+legend({'$u$'},'Interpreter', 'latex')
+legend boxoff
+
+K =
+
+   72.2618   16.8275   -1.0000   -2.9073
+
+
+ans =
+
+  -4.4725 + 0.0768i
+  -4.4725 - 0.0768i
+  -0.4099 + 0.4064i
+  -0.4099 - 0.4064i
+
+C = [100 0 0 0; 0 0 10 0];
+Q = C'*C; R = eye (1);
+K = lqr(A,B,Q,R)
+A3 = A - B*K;
+eig(A3)
+kg = 0; %-inv(C*inv(A3)*B);
+u(:,1) = -K*x(:,1) + kg*r(:,1);
+for i = 1:nt-1
+x_dot(:,i) = A*x(:,i) + B*u(:,i);
+x(:,i+1) = x(:,i) + x_dot(:,i)*dt;
+y(:,i+1) = C*x(:,i+1);
+u(:,i+1) = -K*x(:,i+1) + kg*r(:,i+1);
+end
+
+figure
+plot(t,x(1,:),'b',t,x(2,:),'r',t,x(3,:),'g',t,x(4,:),'m','linewidth',2)
+set(gca,'fontsize',18)
+title('LQR control for $y = [100 x_1, 10 x_3]^T$','Interpreter', 'latex')
+legend({'$x_1$','$x_2$','$x_3$','$x_4$'},'Interpreter', 'latex')
+legend boxoff
+xlabel('Time (s)')
+
+figure
+plot(t,u,'k--','LineWidth',2)
+set(gca,'fontsize',18)
+title('LQR optimal input')
+legend({'$u$'},'Interpreter', 'latex')
+legend boxoff
+
+K =
+
+  172.2427   34.8813  -10.0000  -16.8667
+
+
+ans =
+
+  -6.6960 + 4.9901i
+  -6.6960 - 4.9901i
+  -0.7144 + 0.6675i
+  -0.7144 - 0.6675i
+
+\end{verbatim} \color{black}
+
+
+
+
+\end{document}
+

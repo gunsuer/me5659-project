@@ -1,0 +1,89 @@
+
+% This LaTeX was auto-generated from MATLAB code.
+% To make changes, update the MATLAB code and republish this document.
+
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{color}
+
+\sloppy
+\definecolor{lightgray}{gray}{0.5}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+    
+    \begin{verbatim}
+clear;clc
+
+syms g L m1 m2;
+
+% ss model
+A = [0 1 0 0;g/L*(m1+m2)/m1 0 0 0;0 0 0 1;g*m2/m1 0 0 0];
+B = [0;1/(L*m1);0;1/m1];
+
+C_theta = [1 0 0 0];
+C_w = [0 0 1 0];
+C_theta_and_w = [1 0 0 0;0 0 1 0];
+
+D = 0;
+
+obsv_theta = [C_theta;C_theta*A;C_theta*A^2;C_theta*A^3]
+rank(obsv_theta)
+
+obsv_w = [C_w;C_w*A;C_w*A^2;C_w*A^3]
+rank(obsv_w)
+
+obsv_theta_and_w = [C_theta_and_w;C_theta_and_w*A;C_theta_and_w*A^2;C_theta_and_w*A^3]
+rank(obsv_theta_and_w)
+\end{verbatim}
+
+        \color{lightgray} \begin{verbatim} 
+obsv_theta =
+ 
+[                   1,                    0, 0, 0]
+[                   0,                    1, 0, 0]
+[(g*(m1 + m2))/(L*m1),                    0, 0, 0]
+[                   0, (g*(m1 + m2))/(L*m1), 0, 0]
+ 
+
+ans =
+
+     2
+
+ 
+obsv_w =
+ 
+[        0,         0, 1, 0]
+[        0,         0, 0, 1]
+[(g*m2)/m1,         0, 0, 0]
+[        0, (g*m2)/m1, 0, 0]
+ 
+
+ans =
+
+     4
+
+ 
+obsv_theta_and_w =
+ 
+[                   1,                    0, 0, 0]
+[                   0,                    0, 1, 0]
+[                   0,                    1, 0, 0]
+[                   0,                    0, 0, 1]
+[(g*(m1 + m2))/(L*m1),                    0, 0, 0]
+[           (g*m2)/m1,                    0, 0, 0]
+[                   0, (g*(m1 + m2))/(L*m1), 0, 0]
+[                   0,            (g*m2)/m1, 0, 0]
+ 
+
+ans =
+
+     4
+
+\end{verbatim} \color{black}
+    
+
+
+\end{document}
+

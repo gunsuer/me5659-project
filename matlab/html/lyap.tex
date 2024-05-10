@@ -1,0 +1,80 @@
+
+% This LaTeX was auto-generated from MATLAB code.
+% To make changes, update the MATLAB code and republish this document.
+
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{color}
+
+\sloppy
+\definecolor{lightgray}{gray}{0.5}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+    
+    \begin{verbatim}
+clear;clc
+
+syms p11 p12 p13 p14 p22 p23 p24 p33 p34 p44;
+m1 = 2;
+m2 = 1;
+g = 10;
+L = 0.75;
+
+A = [0 1 0 0;g*(m1+m2)/(m1*L) 0 0 0;0 0 0 1;g*m2/m1 0 0 0];
+P = [p11 p12 p13 p14;p12 p22 p23 p24;p13 p23 p33 p34;p14 p24 p34 p44]
+
+Q = simplify(transpose(A)*P+P*A)
+
+solve(Q == eye(4),[p11 p12 p13 p14 p22 p23 p24 p33 p34 p44])
+
+eig(A)
+\end{verbatim}
+
+        \color{lightgray} \begin{verbatim} 
+P =
+ 
+[p11, p12, p13, p14]
+[p12, p22, p23, p24]
+[p13, p23, p33, p34]
+[p14, p24, p34, p44]
+ 
+ 
+Q =
+ 
+[     40*p12 + 10*p14, p11 + 20*p22 + 5*p24, 20*p23 + 5*p34, p13 + 20*p24 + 5*p44]
+[p11 + 20*p22 + 5*p24,                2*p12,            p13,            p14 + p23]
+[      20*p23 + 5*p34,                  p13,              0,                  p33]
+[p13 + 20*p24 + 5*p44,            p14 + p23,            p33,                2*p34]
+ 
+
+ans = 
+
+  struct with fields:
+
+    p11: [0×1 sym]
+    p12: [0×1 sym]
+    p13: [0×1 sym]
+    p14: [0×1 sym]
+    p22: [0×1 sym]
+    p23: [0×1 sym]
+    p24: [0×1 sym]
+    p33: [0×1 sym]
+    p34: [0×1 sym]
+    p44: [0×1 sym]
+
+
+ans =
+
+         0
+         0
+    4.4721
+   -4.4721
+
+\end{verbatim} \color{black}
+    
+
+
+\end{document}
+

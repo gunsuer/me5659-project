@@ -1,0 +1,111 @@
+
+% This LaTeX was auto-generated from MATLAB code.
+% To make changes, update the MATLAB code and republish this document.
+
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{color}
+
+\sloppy
+\definecolor{lightgray}{gray}{0.5}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+    
+    \begin{verbatim}
+clear;clc
+
+m1 = 2;
+m2 = 1;
+g = 10;
+L = 0.75;
+
+A = [0 1 0 0;g/L*(m1+m2)/m1 0 0 0;0 0 0 1;g*m2/m1 0 0 0];
+B = [0;1/(L*m1);0;1/m1];
+C = [1 0 0 0];
+D = 0;
+
+[E,V] = eig(A)
+
+cntr = [B A*B A^2*B A^3*B]
+icntr = inv(cntr)
+q = icntr(4,:)
+T = [q;q*A;q*A^2;q*A^3]
+Ac = T*A*inv(T)
+Bc = T*B
+Cc = C*inv(T)
+\end{verbatim}
+
+        \color{lightgray} \begin{verbatim}
+E =
+
+         0         0    0.2117   -0.2117
+         0         0    0.9468    0.9468
+    1.0000   -1.0000    0.0529   -0.0529
+         0    0.0000    0.2367    0.2367
+
+
+V =
+
+         0         0         0         0
+         0         0         0         0
+         0         0    4.4721         0
+         0         0         0   -4.4721
+
+
+cntr =
+
+         0    0.6667         0   13.3333
+    0.6667         0   13.3333         0
+         0    0.5000         0    3.3333
+    0.5000         0    3.3333         0
+
+
+icntr =
+
+         0   -0.7500         0    3.0000
+   -0.7500         0    3.0000         0
+         0    0.1125         0   -0.1500
+    0.1125         0   -0.1500         0
+
+
+q =
+
+    0.1125         0   -0.1500         0
+
+
+T =
+
+    0.1125         0   -0.1500         0
+         0    0.1125         0   -0.1500
+    1.5000         0         0         0
+         0    1.5000         0         0
+
+
+Ac =
+
+         0    1.0000         0   -0.0000
+         0         0    1.0000         0
+         0         0         0    1.0000
+         0         0   20.0000         0
+
+
+Bc =
+
+         0
+   -0.0000
+         0
+    1.0000
+
+
+Cc =
+
+         0         0    0.6667         0
+
+\end{verbatim} \color{black}
+    
+
+
+\end{document}
+
